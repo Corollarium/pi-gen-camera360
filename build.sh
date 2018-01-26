@@ -131,6 +131,11 @@ if [ -z "${IMG_NAME}" ]; then
 	exit 1
 fi
 
+if [ -z "${BINARY_PATH}" ]; then
+	echo "BINARY_PATH not set" 1>&2
+	exit 1
+fi
+
 export USE_QEMU=${USE_QEMU:-0}
 export IMG_DATE=${IMG_DATE:-"$(date +%Y-%m-%d)"}
 
@@ -162,9 +167,11 @@ export QUILT_NO_DIFF_INDEX=1
 export QUILT_NO_DIFF_TIMESTAMPS=1
 export QUILT_REFRESH_ARGS="-p ab"
 
+mkdir $BASE_DIR/stage2/files/ -p
+cp $BINARY_PATH $BASE_DIR/state2/files/
+
 source ${SCRIPT_DIR}/common
 source ${SCRIPT_DIR}/dependencies_check
-
 
 dependencies_check ${BASE_DIR}/depends
 

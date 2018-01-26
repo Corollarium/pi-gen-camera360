@@ -17,4 +17,6 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
+/home/pi/camera360pi --logLevel=DEBUG &> /var/log/camera360pi.log &
+
 exit 0

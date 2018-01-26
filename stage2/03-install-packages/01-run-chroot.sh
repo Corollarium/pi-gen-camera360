@@ -15,3 +15,7 @@ sed /boot/config.txt -i -e "s/^fixup_file/#fixup_file/"
 touch /boot/ssh
 
 # TODO pi passwd (and don't commit that to github!)
+
+cp $BASE_DIR/state2/files/camera360pi /home/pi/camera360pi
+chmod 774 /home/pi/camera360pi
+chown pi.pi /home/pi/camera360pi
