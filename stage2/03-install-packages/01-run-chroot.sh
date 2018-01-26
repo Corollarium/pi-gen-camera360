@@ -1,6 +1,3 @@
-# socket io client
-pip3 install socketIO-client
-
 # enable camera
 [ -e /boot/config.txt ] || touch /boot/config.txt
 set_config_var start_x 1 /boot/config.txt
