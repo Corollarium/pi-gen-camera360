@@ -11,3 +11,7 @@ fi
 sed /boot/config.txt -i -e "s/^startx/#startx/"
 sed /boot/config.txt -i -e "s/^fixup_file/#fixup_file/"
 
+#enable SSH
+touch /boot/ssh
+
+# TODO pi passwd (and don't commit that to github!)
