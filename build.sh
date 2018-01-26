@@ -168,7 +168,7 @@ export QUILT_NO_DIFF_TIMESTAMPS=1
 export QUILT_REFRESH_ARGS="-p ab"
 
 mkdir $BASE_DIR/stage2/files/ -p
-cp $BINARY_PATH $BASE_DIR/state2/files/
+cp $BINARY_PATH $BASE_DIR/stage2/files/
 
 source ${SCRIPT_DIR}/common
 source ${SCRIPT_DIR}/dependencies_check
