@@ -1,9 +1,10 @@
 deploy/*
 work/*
-config
+#config
 postrun.sh
 SKIP_IMAGES
 .pc
 *-pc
 apt-cacher-ng/
 nbproject/
+.vscode/
