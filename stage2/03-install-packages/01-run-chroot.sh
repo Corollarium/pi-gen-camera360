@@ -7,4 +7,10 @@ echo "gpu_mem=128" >> /boot/config.txt
 #enable SSH
 touch /boot/ssh
 
-# TODO pi passwd (and don't commit that to github!)
+systemctl stop triggerhappy
+systemctl stop dbus.service
+systemctl disable triggerhappy
+systemctl disable dbus.service
+
+# TODO set on CONFIG file
+usermod --password ChmKdHEfMaOBM pi
