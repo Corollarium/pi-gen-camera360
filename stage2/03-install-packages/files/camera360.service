@@ -5,9 +5,10 @@ After=systemd-user-sessions.service
 After=network-online.target
 
 [Service]
-ExecStart=/home/pi/camera360pi --logLevel=DEBUG
-#StandardOutput=syslog+console
-#StandardError=syslog+console
+ExecStart=/home/pi/camera360pi
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=camera360
 Restart=always
 RestartSec=60
 
