@@ -12,3 +12,6 @@ systemctl disable triggerhappy
 
 # TODO set on CONFIG file
 usermod --password ChmKdHEfMaOBM pi
+
+# enable tmpreaper
+sed -i 's/SHOWWARNING=true//g' /etc/tmpreaper.conf
