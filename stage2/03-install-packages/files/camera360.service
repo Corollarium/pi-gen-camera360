@@ -5,7 +5,8 @@ After=systemd-user-sessions.service
 After=network-online.target
 
 [Service]
-ExecStart=/home/pi/camera360pi
+ExecStart=/usr/local/bin/camera360pi
+#User=pi
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=camera360
