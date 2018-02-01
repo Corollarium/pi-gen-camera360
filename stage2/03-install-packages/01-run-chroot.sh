@@ -17,3 +17,7 @@ usermod --password ChmKdHEfMaOBM pi
 # special case because it prompts a "Ok" confirmation screen.
 DEBIAN_FRONTEND=noninteractive apt-get install -y tmpreaper
 sed -i 's/SHOWWARNING=true//g' /etc/tmpreaper.conf
+
+# enable autologin as pi user
+# (@see /etc/systemd/system/getty.target.wants/autologin@tty1.service)
+systemctl enable autologin@
