@@ -13,5 +13,7 @@ systemctl disable triggerhappy
 # TODO set on CONFIG file
 usermod --password ChmKdHEfMaOBM pi
 
-# enable tmpreaper
+# install and enable tmpreaper
+# special case because it prompts a "Ok" confirmation screen.
+DEBIAN_FRONTEND=noninteractive apt-get install -y tmpreaper
 sed -i 's/SHOWWARNING=true//g' /etc/tmpreaper.conf
