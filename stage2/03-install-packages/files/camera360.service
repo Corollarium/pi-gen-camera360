@@ -5,8 +5,9 @@ After=systemd-user-sessions.service
 After=network-online.target
 
 [Service]
-Environment="ONE=--logLevel=DEBUG 2>&1 | tee /dev/tty1"
-ExecStart=/usr/local/bin/camera360pi ${ONE}
+#Environment="ONE=--logLevel=DEBUG 2>&1 | tee /dev/tty1"
+#ExecStart=/usr/local/bin/camera360pi ${ONE}
+ExecStart=/bin/bash -c '/usr/local/bin/camera360pi --logLevel=DEBUG 2>&1 | tee /dev/tty1'
 #User=pi
 StandardOutput=syslog
 StandardError=syslog
