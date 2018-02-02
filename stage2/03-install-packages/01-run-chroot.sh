@@ -22,4 +22,4 @@ sed -i 's/SHOWWARNING=true//g' /etc/tmpreaper.conf
 # (@see /etc/systemd/system/getty.target.wants/autologin@tty1.service)
 systemctl enable autologin@
 
-sed -i 's/$/ consoleblank=0/' cmdline.txt
+sed -i 's/$/ consoleblank=0/' /boot/cmdline.txt
