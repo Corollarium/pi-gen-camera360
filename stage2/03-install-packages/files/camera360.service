@@ -2,7 +2,7 @@
 Description=Camera360 startup script
 
 [Service]
-ExecStart=/usr/local/bin/camera360pi --logLevel=DEBUG
+ExecStart=/usr/local/bin/camera360pi
 User=pi
 StandardOutput=syslog+console
 StandardError=syslog+console
