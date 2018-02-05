@@ -21,5 +21,6 @@ sed -i 's/SHOWWARNING=true//g' /etc/tmpreaper.conf
 # enable autologin as pi user
 # (@see /etc/systemd/system/getty.target.wants/autologin@tty1.service)
 systemctl enable autologin@
+systemctl disable getty@tty1.service
 
 sed -i 's/$/ consoleblank=0/' /boot/cmdline.txt
