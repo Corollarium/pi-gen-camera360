@@ -1,20 +1,15 @@
 [Unit]
 Description=Camera360 startup script
-After=network.target
-After=systemd-user-sessions.service
-After=network-online.target
 
 [Service]
-#Environment="ONE=--logLevel=DEBUG 2>&1 | tee /dev/tty1"
-#ExecStart=/usr/local/bin/camera360pi ${ONE}
-ExecStart=/bin/bash -c '/usr/local/bin/camera360pi 2>&1 | tee /dev/tty1'
+ExecStart=/usr/local/bin/camera360pi --logLevel=DEBUG
 User=pi
-StandardOutput=syslog
-StandardError=syslog
+StandardOutput=syslog+console
+StandardError=syslog+console
+TTYPath=/dev/tty1
 SyslogIdentifier=camera360
 Restart=always
 RestartSec=60
-
 
 [Install]
 WantedBy=multi-user.target
