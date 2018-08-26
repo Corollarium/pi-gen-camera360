@@ -5,7 +5,7 @@ echo "start_x=1" >> /boot/config.txt
 echo "gpu_mem=128" >> /boot/config.txt
 
 #enable SSH
-# touch /boot/ssh
+touch /boot/ssh
 
 systemctl stop triggerhappy
 systemctl disable triggerhappy
