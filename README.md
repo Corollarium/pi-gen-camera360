@@ -13,7 +13,7 @@ To install the required dependencies for pi-gen you should run:
 
 ```bash
 apt-get install quilt parted realpath qemu-user-static debootstrap zerofree pxz zip \
-dosfstools bsdtar libcap2-bin grep rsync xz-utils
+dosfstools bsdtar libcap2-bin grep rsync xz-utils file git
 ```
 
 The file `depends` contains a list of tools needed.  The format of this
@@ -70,7 +70,8 @@ The following environment variables are supported:
 
  * `USE_QEMU` (Default: `"0"`)
 
-   This enable the Qemu mode and set filesystem and image suffix if set to 1.
+   Setting to '1' enables the QEMU mode - creating an image that can be mounted via QEMU for an emulated
+   environment. These images include "-qemu" in the image file name.
 
 
 A simple example for building Raspbian:
@@ -98,7 +99,7 @@ The following process is followed to build images:
    There are a number of different files and directories which can be used to
    control different parts of the build process:
 
-     - **00-run.sh** - A unix shell script. Needs to be made executable for it to run
+     - **00-run.sh** - A unix shell script. Needs to be made executable for it to run.
 
      - **00-run-chroot.sh** - A unix shell script which will be run in the chroot
        of the image build directory. Needs to be made executable for it to run.
@@ -110,9 +111,12 @@ The following process is followed to build images:
        separated, per line.
 
      - **00-packages-nr** - As 00-packages, except these will be installed using
-       the ```--no-install-recommends -y``` parameters to apt-get
+       the ```--no-install-recommends -y``` parameters to apt-get.
 
-     - **00-patches** - A directory containing patch files to be applied
+     - **00-patches** - A directory containing patch files to be applied, using quilt.
+       If a file named 'EDIT' is present in the directory, the build process will
+       be interrupted with a bash session, allowing an opportunity to create/revise
+       the patches.
 
   * If the stage directory contains files called "EXPORT_NOOBS" or "EXPORT_IMAGE" then
     add this stage to a list of images to generate
@@ -137,6 +141,12 @@ continue:
 
 ```bash
 CONTINUE=1 ./build-docker.sh
+```
+
+After successful build, the build container is by default removed. This may be undesired when making incremental changes to a customized build. To prevent the build script from remove the container add
+
+```bash
+PRESERVE_CONTAINER=1 ./build-docker.sh
 ```
 
 There is a possibility that even when running from a docker container, the
@@ -207,14 +217,14 @@ If you wish to build up to a specified stage (such as building up to stage 2
 for a lite system), place an empty file named `SKIP` in each of the `./stage`
 directories you wish not to include.
 
-Then remove the `EXPORT*` files from `./stage4` (if building up to stage 2) or
-from `./stage2` (if building a minimal system).
+Then add an empty file named `SKIP_IMAGES` to `./stage4` (if building up to stage 2) or
+to `./stage2` (if building a minimal system).
 
 ```bash
 # Example for building a lite system
 echo "IMG_NAME='Raspbian'" > config
 touch ./stage3/SKIP ./stage4/SKIP ./stage5/SKIP
-rm stage4/EXPORT* stage5/EXPORT*
+touch ./stage4/SKIP_IMAGES ./stage5/SKIP_IMAGES
 sudo ./build.sh  # or ./build-docker.sh
 ```
 
@@ -239,3 +249,26 @@ follows:
  * Once you're happy with the image you can remove the SKIP_IMAGES files and
    export your image to test
 
+# Troubleshooting
+
+## `binfmt_misc`
+
+Linux is able execute binaries from other architectures, meaning that it should be
+possible to make use of `pi-gen` on an x86_64 system, even though it will be running
+ARM binaries. This requires support from the [`binfmt_misc`](https://en.wikipedia.org/wiki/Binfmt_misc)
+kernel module.
+
+You may see the following error:
+
+```
+update-binfmts: warning: Couldn't load the binfmt_misc module.
+```
+
+To resolve this, ensure that the following files are available (install them if necessary):
+
+```
+/lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko
+/usr/bin/qemu-arm-static
+```
+
+You may also need to load the module by hand - run `modprobe binfmt_misc`.
